@@ -60,6 +60,31 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+---
+
+## 🐳 Kontainerisasi & Docker Hub (UTS POPL)
+
+Repository Publik Docker Hub untuk proyek ini:
+- 🔗 **Docker Hub Repository:** `https://hub.docker.com/r/<USERNAME_DOCKERHUB>/kopi-gayo-frontend`
+- 🏷️ **Image Tag:** `<USERNAME_DOCKERHUB>/kopi-gayo-frontend:v1.0-UTS`
+
+### Cara Menjalankan via Docker:
+```bash
+# 1. Pull image dari Docker Hub
+docker pull <USERNAME_DOCKERHUB>/kopi-gayo-frontend:v1.0-UTS
+
+# 2. Jalankan container
+docker run -d -p 3000:3000 --name kopi-gayo-app <USERNAME_DOCKERHUB>/kopi-gayo-frontend:v1.0-UTS
+```
+
+### Cara Menjalankan via Docker Compose:
+```bash
+docker compose up -d
+```
+Akses aplikasi melalui browser di [http://localhost:3000](http://localhost:3000).
+
+---
+
 ## 📁 Struktur Proyek
 
 ```

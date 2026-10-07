@@ -3,7 +3,7 @@
    Aesthetic: Luxury Dark Coffee Glassmorphism with Warm Amber & Crema Glow
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap');
 
 :root {
   /* Color Palette - Deep Obsidian, Roast Ember, & Golden Crema */
@@ -80,7 +80,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   color-scheme: dark;
@@ -96,11 +96,12 @@ body {
               var(--bg-primary);
   background-attachment: fixed;
   overflow-x: hidden;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
 }
 
 /* Typography Utilities */
 .font-serif {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {

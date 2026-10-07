@@ -101,10 +101,10 @@ export function CoffeeProvider({ children }) {
       const admin = INITIAL_USERS[0];
       setCurrentUser(admin);
       saveToStorage('gayo_user', admin);
-      saveToStorage('gayo_admin_session', JSON.stringify({ 
+      saveToStorage('gayo_admin_session', { 
         loggedIn: true, 
         timestamp: Date.now() 
-      }));
+      });
       showToast(`Selamat datang kembali, ${admin.name}!`);
       return { success: true, role: 'admin' };
     } 
@@ -126,26 +126,23 @@ export function CoffeeProvider({ children }) {
 
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem('gayo_user');
-    localStorage.removeItem('gayo_admin_session');
+    try {
+      localStorage.removeItem('gayo_user');
+      localStorage.removeItem('gayo_admin_session');
+    } catch (e) {}
     showToast('Anda telah berhasil keluar akun.', 'info');
   };
 
   const isAdminAuthenticated = () => {
-    if (currentUser?.role !== 'admin') return false;
-    
+    if (currentUser?.role === 'admin') return true;
     try {
-      const session = localStorage.getItem('gayo_admin_session');
-      if (!session) return false;
-      
-      const { loggedIn, timestamp } = JSON.parse(session);
-      const sessionAge = Date.now() - timestamp;
-      const maxAge = 24 * 60 * 60 * 1000; // 24 hours
-      
-      return loggedIn && sessionAge < maxAge;
-    } catch (e) {
-      return false;
-    }
+      const savedUser = localStorage.getItem('gayo_user');
+      if (savedUser) {
+        const u = JSON.parse(savedUser);
+        if (u?.role === 'admin') return true;
+      }
+    } catch (e) {}
+    return false;
   };
 
   // Cart actions

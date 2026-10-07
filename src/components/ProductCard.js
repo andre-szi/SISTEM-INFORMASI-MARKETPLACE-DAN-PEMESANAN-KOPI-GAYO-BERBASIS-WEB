@@ -2,12 +2,14 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Heart, ShoppingBag, Star, Flame, MapPin } from 'lucide-react';
+import { Heart, ShoppingBag, Star, Flame, MapPin, Edit2, ShieldCheck } from 'lucide-react';
 import { useCoffee } from '@/context/CoffeeContext';
 
 export default function ProductCard({ coffee }) {
-  const { addToCart, setActiveProductModal, wishlist, toggleWishlist } = useCoffee();
+  const { addToCart, setActiveProductModal, wishlist, toggleWishlist, currentUser } = useCoffee();
+  const isAdmin = currentUser?.role === 'admin';
 
   const isLiked = wishlist.includes(coffee.id);
 
@@ -200,20 +202,58 @@ export default function ProductCard({ coffee }) {
             <span style={{ fontSize: '0.75rem', color: '#78716c', marginLeft: 4 }}>/200g</span>
           </div>
 
-          <button
-            onClick={handleQuickAdd}
-            className="btn btn-primary"
-            style={{
-              padding: '8px 14px',
-              fontSize: '0.82rem',
-              borderRadius: 10,
-              gap: 6
-            }}
-            title="Tambah ke keranjang"
-          >
-            <ShoppingBag size={15} />
-            <span>Pesan</span>
-          </button>
+          {isAdmin ? (
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+              <Link
+                href="/admin"
+                onClick={(e) => e.stopPropagation()}
+                className="btn btn-secondary"
+                style={{
+                  padding: '7px 10px',
+                  fontSize: '0.78rem',
+                  borderColor: 'rgba(225, 29, 72, 0.5)',
+                  color: '#fda4af',
+                  background: 'rgba(159, 18, 57, 0.25)',
+                  borderRadius: 8,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4
+                }}
+                title="Kelola & Edit produk ini di Dashboard Admin (CRUD)"
+              >
+                <Edit2 size={13} color="#fda4af" />
+                <span>CRUD</span>
+              </Link>
+              <button
+                onClick={handleQuickAdd}
+                className="btn btn-primary"
+                style={{
+                  padding: '7px 10px',
+                  fontSize: '0.78rem',
+                  borderRadius: 8,
+                  gap: 4
+                }}
+                title="Pesan sebagai sampel / tes"
+              >
+                <ShoppingBag size={14} />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={handleQuickAdd}
+              className="btn btn-primary"
+              style={{
+                padding: '8px 14px',
+                fontSize: '0.82rem',
+                borderRadius: 10,
+                gap: 6
+              }}
+              title="Tambah ke keranjang"
+            >
+              <ShoppingBag size={15} />
+              <span>Pesan</span>
+            </button>
+          )}
         </div>
       </div>
 

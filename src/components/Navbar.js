@@ -75,7 +75,7 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation Links - Desktop */}
-        <nav style={{ display: 'none', alignItems: 'center', gap: 28 }} className="desktop-nav">
+        <nav style={{ display: 'none', alignItems: 'center', gap: 24 }} className="desktop-nav">
           <Link
             href="/"
             style={{
@@ -90,6 +90,46 @@ export default function Navbar() {
           >
             Beranda
           </Link>
+
+          {/* Conditional Dashboard Link based on role */}
+          {isAdmin ? (
+            <Link
+              href="/admin"
+              style={{
+                fontSize: '0.92rem',
+                fontWeight: 700,
+                color: pathname.startsWith('/admin') ? '#fda4af' : '#fca5a5',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 14px',
+                borderRadius: 10,
+                background: pathname.startsWith('/admin') ? 'rgba(159, 18, 57, 0.3)' : 'rgba(159, 18, 57, 0.15)',
+                border: '1px solid rgba(225, 29, 72, 0.45)',
+                boxShadow: '0 2px 8px rgba(159, 18, 57, 0.25)'
+              }}
+            >
+              <ShieldCheck size={16} color="#fda4af" />
+              <span>Dashboard Admin</span>
+            </Link>
+          ) : (
+            <Link
+              href="/dashboard"
+              style={{
+                fontSize: '0.92rem',
+                fontWeight: 600,
+                color: pathname === '/dashboard' ? '#f59e0b' : 'var(--text-secondary)',
+                transition: 'color 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6
+              }}
+            >
+              <User size={16} />
+              <span>Dashboard Pelanggan</span>
+            </Link>
+          )}
+
           <Link
             href="/marketplace"
             style={{
@@ -101,39 +141,43 @@ export default function Navbar() {
           >
             Marketplace
           </Link>
-          <Link
-            href="/orders"
-            style={{
-              fontSize: '0.92rem',
-              fontWeight: 500,
-              color: pathname === '/orders' ? '#f59e0b' : 'var(--text-secondary)',
-              transition: 'color 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6
-            }}
-          >
-            <Clock size={16} />
-            Pesanan Saya
-          </Link>
-          {isAdmin && (
+
+          {!isAdmin ? (
             <Link
-              href="/admin"
+              href="/orders"
               style={{
                 fontSize: '0.92rem',
-                fontWeight: 600,
-                color: pathname.startsWith('/admin') ? '#fda4af' : '#d1c7bc',
+                fontWeight: 500,
+                color: pathname === '/orders' ? '#f59e0b' : 'var(--text-secondary)',
+                transition: 'color 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6
+              }}
+            >
+              <Clock size={16} />
+              Pesanan Saya
+            </Link>
+          ) : (
+            <Link
+              href="/dashboard"
+              style={{
+                fontSize: '0.88rem',
+                fontWeight: 500,
+                color: pathname === '/dashboard' ? '#fbbf24' : '#9ca3af',
+                transition: 'color 0.2s ease',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
-                padding: '6px 12px',
+                padding: '4px 10px',
                 borderRadius: 8,
-                background: pathname.startsWith('/admin') ? 'rgba(159, 18, 57, 0.2)' : 'rgba(255, 255, 255, 0.04)',
-                border: pathname.startsWith('/admin') ? '1px solid rgba(159, 18, 57, 0.4)' : '1px solid transparent'
+                background: 'rgba(255, 255, 255, 0.04)',
+                border: '1px solid rgba(255, 255, 255, 0.08)'
               }}
+              title="Lihat tampilan Dashboard Pelanggan"
             >
-              <ShieldCheck size={16} color="#fda4af" />
-              Admin
+              <Coffee size={15} color="#fbbf24" />
+              <span>Lihat Dashboard User</span>
             </Link>
           )}
         </nav>
@@ -259,38 +303,74 @@ export default function Navbar() {
 
                 <div style={{ padding: '4px 0' }}>
                   {!isAdmin && (
-                    <Link
-                      href="/orders"
-                      onClick={() => setProfileDropdownOpen(false)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        padding: '8px 12px',
-                        fontSize: '0.85rem',
-                        color: '#d1c7bc',
-                        borderRadius: 8
-                      }}
-                    >
-                      <Clock size={16} /> Riwayat Pesanan
-                    </Link>
+                    <>
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setProfileDropdownOpen(false)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 8,
+                          padding: '8px 12px',
+                          fontSize: '0.85rem',
+                          color: '#fbbf24',
+                          fontWeight: 600,
+                          borderRadius: 8
+                        }}
+                      >
+                        <User size={16} /> Dashboard Pelanggan
+                      </Link>
+                      <Link
+                        href="/orders"
+                        onClick={() => setProfileDropdownOpen(false)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 8,
+                          padding: '8px 12px',
+                          fontSize: '0.85rem',
+                          color: '#d1c7bc',
+                          borderRadius: 8
+                        }}
+                      >
+                        <Clock size={16} /> Riwayat Pesanan
+                      </Link>
+                    </>
                   )}
                   {isAdmin && (
-                    <Link
-                      href="/admin"
-                      onClick={() => setProfileDropdownOpen(false)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        padding: '8px 12px',
-                        fontSize: '0.85rem',
-                        color: '#fda4af',
-                        borderRadius: 8
-                      }}
-                    >
-                      <ShieldCheck size={16} /> Admin Dashboard
-                    </Link>
+                    <>
+                      <Link
+                        href="/admin"
+                        onClick={() => setProfileDropdownOpen(false)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 8,
+                          padding: '8px 12px',
+                          fontSize: '0.85rem',
+                          color: '#fda4af',
+                          fontWeight: 700,
+                          borderRadius: 8
+                        }}
+                      >
+                        <ShieldCheck size={16} /> Admin Dashboard (CRUD)
+                      </Link>
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setProfileDropdownOpen(false)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 8,
+                          padding: '8px 12px',
+                          fontSize: '0.85rem',
+                          color: '#fbbf24',
+                          borderRadius: 8
+                        }}
+                      >
+                        <Coffee size={16} /> Lihat Dashboard User
+                      </Link>
+                    </>
                   )}
                   {!isAdmin ? (
                     <a
@@ -375,6 +455,34 @@ export default function Navbar() {
           >
             Beranda
           </Link>
+
+          {isAdmin ? (
+            <>
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                style={{ fontSize: '1rem', color: '#fda4af', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}
+              >
+                <ShieldCheck size={18} /> Dashboard Admin
+              </Link>
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                style={{ fontSize: '0.95rem', color: '#fbbf24', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}
+              >
+                <Coffee size={18} /> Lihat Dashboard User
+              </Link>
+            </>
+          ) : (
+            <Link
+              href="/dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ fontSize: '1rem', color: '#f59e0b', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}
+            >
+              <User size={18} /> Dashboard Pelanggan
+            </Link>
+          )}
+
           <Link
             href="/marketplace"
             onClick={() => setMobileMenuOpen(false)}
@@ -382,20 +490,14 @@ export default function Navbar() {
           >
             Marketplace
           </Link>
-          <Link
-            href="/orders"
-            onClick={() => setMobileMenuOpen(false)}
-            style={{ fontSize: '1rem', color: '#fcf9f2', fontWeight: 600 }}
-          >
-            Pesanan Saya
-          </Link>
-          {isAdmin && (
+
+          {!isAdmin && (
             <Link
-              href="/admin"
+              href="/orders"
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: '1rem', color: '#fda4af', fontWeight: 600 }}
+              style={{ fontSize: '1rem', color: '#fcf9f2', fontWeight: 600 }}
             >
-              Panel Admin
+              Pesanan Saya
             </Link>
           )}
         </div>

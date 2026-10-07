@@ -21,9 +21,9 @@ export default function AuthPage() {
     const res = login(email, password);
     if (res.success) {
       if (res.role === 'admin') {
-        router.push('/admin/login'); // Redirect admin to login page
+        router.push('/admin'); // Redirect admin directly to Admin Dashboard
       } else {
-        router.push('/marketplace');
+        router.push('/dashboard'); // Redirect customer directly to User Dashboard
       }
     }
   };
@@ -31,10 +31,10 @@ export default function AuthPage() {
   const handleQuickLogin = (role) => {
     if (role === 'admin') {
       login('admin@kopigayo.id', 'admin123');
-      router.push('/admin/login'); // Redirect to admin login page
+      router.push('/admin'); // Open Admin Dashboard directly
     } else {
       login('budi@mahasiswa.id', 'customer123');
-      router.push('/marketplace');
+      router.push('/dashboard'); // Open User Dashboard directly
     }
   };
 
@@ -45,7 +45,7 @@ export default function AuthPage() {
         animate={{ opacity: 1, y: 0 }}
         className="glass-panel"
         style={{
-          maxWidth: 480,
+          maxWidth: 500,
           width: '100%',
           padding: '36px 32px',
           border: '1px solid rgba(217, 119, 6, 0.3)',
@@ -72,43 +72,80 @@ export default function AuthPage() {
             <Coffee size={28} />
           </div>
           <h1 className="font-serif" style={{ fontSize: '1.75rem', color: '#fcf9f2', marginBottom: 6 }}>
-            {isRegister ? 'Daftar Akun Baru' : 'Masuk ke Sistem Kopi Gayo'}
+            {isRegister ? 'Daftar Akun Baru' : 'Pilih Akses Masuk Sistem'}
           </h1>
           <p style={{ color: '#9ca3af', fontSize: '0.85rem' }}>
-            Akses marketplace kopi spesialti dan pemesanan online langsung dari perkebunan
+            Sistem menyediakan 2 dashboard terpisah: <strong>Dashboard Pelanggan</strong> &amp; <strong>Dashboard Admin</strong>
           </p>
         </div>
 
-        {/* Quick Demo Login Buttons */}
+        {/* 2 Separate Dashboard Quick Access Cards */}
         <div
           style={{
-            background: 'rgba(245, 158, 11, 0.08)',
-            border: '1px dashed rgba(245, 158, 11, 0.35)',
-            borderRadius: 14,
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: 16,
             padding: 16,
-            marginBottom: 24
+            marginBottom: 24,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 12
           }}
         >
-          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#fbbf24', textTransform: 'uppercase', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <Sparkles size={14} /> Login Cepat (Demo Customer):
+          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#fbbf24', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <Sparkles size={14} /> Akses Cepat 2 Dashboard:
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 10 }}>
+            {/* User Dashboard Access */}
             <button
+              type="button"
               onClick={() => handleQuickLogin('customer')}
               className="btn btn-secondary btn-sm"
-              style={{ padding: '10px 14px', fontSize: '0.85rem', justifyContent: 'flex-start' }}
+              style={{
+                padding: '12px 14px',
+                fontSize: '0.85rem',
+                justifyContent: 'space-between',
+                borderColor: 'rgba(245, 158, 11, 0.4)',
+                background: 'rgba(245, 158, 11, 0.08)'
+              }}
             >
-              <User size={16} color="#f59e0b" />
-              <span>Login sebagai Customer (budi@mahasiswa.id)</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left' }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#120e09' }}>
+                  <User size={18} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, color: '#fcf9f2' }}>Dashboard Pelanggan (User)</div>
+                  <div style={{ fontSize: '0.74rem', color: '#9ca3af' }}>budi@mahasiswa.id • Keranjang &amp; Pesanan</div>
+                </div>
+              </div>
+              <ArrowRight size={16} color="#fbbf24" />
             </button>
-            <a
-              href="/admin/login"
-              className="btn btn-outline-amber btn-sm"
-              style={{ padding: '10px 14px', fontSize: '0.85rem', justifyContent: 'flex-start', textDecoration: 'none' }}
+
+            {/* Admin Dashboard Access */}
+            <button
+              type="button"
+              onClick={() => handleQuickLogin('admin')}
+              className="btn btn-secondary btn-sm"
+              style={{
+                padding: '12px 14px',
+                fontSize: '0.85rem',
+                justifyContent: 'space-between',
+                borderColor: 'rgba(225, 29, 72, 0.4)',
+                background: 'rgba(159, 18, 57, 0.12)'
+              }}
             >
-              <ShieldCheck size={16} />
-              <span>Login sebagai Admin →</span>
-            </a>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left' }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, #9f1239, #be123c)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                  <ShieldCheck size={18} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, color: '#fda4af' }}>Dashboard Admin (Pengelola)</div>
+                  <div style={{ fontSize: '0.74rem', color: '#fca5a5' }}>admin@kopigayo.id • CRUD &amp; Kontrol Stok</div>
+                </div>
+              </div>
+              <ArrowRight size={16} color="#fda4af" />
+            </button>
           </div>
         </div>
 
