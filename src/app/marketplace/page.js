@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, Suspense } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -14,6 +15,9 @@ import {
   List,
   Coffee,
   Check
+  Plus,
+  ShieldCheck,
+  Edit2
 } from 'lucide-react';
 import { useCoffee } from '@/context/CoffeeContext';
 import ProductCard from '@/components/ProductCard';
@@ -132,6 +136,72 @@ function MarketplaceContent() {
           </p>
         </div>
       </div>
+
+      {/* Admin Quick CRUD Toolbar when logged in as Admin */}
+      {currentUser?.role === 'admin' && (
+        <div
+          style={{
+            padding: '16px 22px',
+            borderRadius: 16,
+            background: 'linear-gradient(135deg, rgba(159, 18, 57, 0.3) 0%, rgba(20, 15, 14, 0.95) 100%)',
+            border: '1.5px solid rgba(225, 29, 72, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 14,
+            boxShadow: '0 8px 24px rgba(159, 18, 57, 0.2)'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div
+              style={{
+                width: 38,
+                height: 38,
+                borderRadius: 10,
+                background: 'linear-gradient(135deg, #9f1239, #be123c)',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(159, 18, 57, 0.4)'
+              }}
+            >
+              <ShieldCheck size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 800, color: '#fcf9f2', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span>Mode Admin Aktif di Marketplace</span>
+                <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: 12, background: 'rgba(225, 29, 72, 0.3)', color: '#fda4af', border: '1px solid rgba(225, 29, 72, 0.5)' }}>
+                  SUPER ADMIN
+                </span>
+              </div>
+              <div style={{ fontSize: '0.82rem', color: '#fda4af', marginTop: 2 }}>
+                Semua kartu produk di bawah dilengkapi tombol <strong>CRUD</strong>. Untuk kontrol stok, edit, dan tambah produk baru, buka Dashboard Admin.
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <Link
+              href="/admin"
+              className="btn btn-primary"
+              style={{
+                padding: '10px 20px',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                background: 'linear-gradient(135deg, #be123c, #9f1239)',
+                border: '1px solid rgba(244, 63, 94, 0.6)',
+                boxShadow: '0 4px 16px rgba(159, 18, 57, 0.4)',
+                gap: 8
+              }}
+            >
+              <Plus size={16} />
+              <span>Buka Dashboard Admin (CRUD Lengkap) →</span>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Main Grid Layout: Filters on Left, Products on Right */}
       <div style={{ display: 'grid', gridTemplateColumns: '270px 1fr', gap: 32 }} className="marketplace-layout">
