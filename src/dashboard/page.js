@@ -631,3 +631,269 @@ export default function UserDashboardPage() {
           </div>
         </div>
       )}
+      {/* =========================================================================
+          MAIN SECTION: KOLEKSI KOPI PILIHAN DI DASHBOARD PELANGGAN
+          ========================================================================= */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* Section Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <span
+                style={{
+                  background: 'rgba(245, 158, 11, 0.15)',
+                  border: '1px solid rgba(245, 158, 11, 0.35)',
+                  color: '#fbbf24',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  padding: '3px 10px',
+                  borderRadius: 20,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6
+                }}
+              >
+                <Sparkles size={12} />
+                KATALOG KOPI SPESIALTI GAYO
+              </span>
+            </div>
+            <h2 className="font-serif" style={{ fontSize: '1.85rem', color: '#fcf9f2', margin: 0 }}>
+              Katalog &amp; Rekomendasi Kopi Favorit
+            </h2>
+            <p style={{ color: '#9ca3af', fontSize: '0.88rem', marginTop: 4, marginBottom: 0 }}>
+              Pilihan biji kopi Arabika Gayo asli Grade 1 segar sangrai mingguan siap dipesan langsung ke rumah Anda.
+            </p>
+          </div>
+
+          <div style={{ fontSize: '0.86rem', color: '#d1c7bc' }}>
+            Menampilkan <strong style={{ color: '#f59e0b' }}>{filteredCoffees.length}</strong> dari{' '}
+            <strong>{coffees.length}</strong> produk kopi
+          </div>
+        </div>
+
+        {/* Filter & Search Bar Controls */}
+        <div
+          className="glass-panel"
+          style={{
+            padding: '18px 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+            border: '1px solid rgba(245, 158, 11, 0.25)'
+          }}
+        >
+          {/* Search + Quick Category */}
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+            {/* Search Input */}
+            <div style={{ position: 'relative', flex: '1 1 280px', maxWidth: 420 }}>
+              <Search
+                size={16}
+                color="#9ca3af"
+                style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)' }}
+              />
+              <input
+                type="text"
+                placeholder="Cari kopi, aroma, proses (Honey, Wine)..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  paddingLeft: 40,
+                  paddingRight: 14,
+                  fontSize: '0.86rem',
+                  width: '100%',
+                  background: 'rgba(18, 15, 12, 0.85)',
+                  border: '1px solid rgba(217, 119, 6, 0.25)',
+                  borderRadius: 10
+                }}
+              />
+            </div>
+
+            {/* Category Pills */}
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setSelectedCategory('all')}
+                style={{
+                  padding: '7px 14px',
+                  borderRadius: 20,
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  border: selectedCategory === 'all' ? '1px solid #f59e0b' : '1px solid rgba(255, 255, 255, 0.1)',
+                  background: selectedCategory === 'all' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+                  color: selectedCategory === 'all' ? '#fbbf24' : '#d1c7bc'
+                }}
+              >
+                Semua Kategori
+              </button>
+              {categories.map(cat => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  style={{
+                    padding: '7px 14px',
+                    borderRadius: 20,
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    border: selectedCategory === cat.id ? '1px solid #f59e0b' : '1px solid rgba(255, 255, 255, 0.1)',
+                    background: selectedCategory === cat.id ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+                    color: selectedCategory === cat.id ? '#fbbf24' : '#d1c7bc'
+                  }}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Secondary Filters: Origin & Roast */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16,
+              flexWrap: 'wrap',
+              paddingTop: 12,
+              borderTop: '1px solid rgba(255, 255, 255, 0.06)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.82rem', color: '#9ca3af' }}>
+              <SlidersHorizontal size={14} /> Filter Detail:
+            </div>
+
+            {/* Origin Select */}
+            <select
+              value={selectedOrigin}
+              onChange={(e) => setSelectedOrigin(e.target.value)}
+              style={{
+                padding: '6px 12px',
+                fontSize: '0.8rem',
+                borderRadius: 8,
+                background: '#181512',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#fcf9f2',
+                width: 'auto'
+              }}
+            >
+              <option value="all">Semua Asal / Origin</option>
+              {origins.filter(o => o !== 'all').map(orig => (
+                <option key={orig} value={orig}>{orig}</option>
+              ))}
+            </select>
+
+            {/* Roast Select */}
+            <select
+              value={selectedRoast}
+              onChange={(e) => setSelectedRoast(e.target.value)}
+              style={{
+                padding: '6px 12px',
+                fontSize: '0.8rem',
+                borderRadius: 8,
+                background: '#181512',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#fcf9f2',
+                width: 'auto'
+              }}
+            >
+              <option value="all">Semua Level Roasting</option>
+              {roasts.filter(r => r !== 'all').map(rst => (
+                <option key={rst} value={rst}>{rst} Roast</option>
+              ))}
+            </select>
+
+            {(searchQuery || selectedCategory !== 'all' || selectedOrigin !== 'all' || selectedRoast !== 'all') && (
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('all');
+                  setSelectedOrigin('all');
+                  setSelectedRoast('all');
+                }}
+                className="btn btn-secondary btn-sm"
+                style={{ padding: '5px 12px', fontSize: '0.78rem', marginLeft: 'auto' }}
+              >
+                Reset Filter
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Goods / Coffee Grid for User */}
+        {filteredCoffees.length === 0 ? (
+          <div
+            className="glass-panel"
+            style={{
+              padding: '60px 20px',
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 14
+            }}
+          >
+            <Coffee size={48} color="#9ca3af" />
+            <h3 style={{ fontSize: '1.2rem', color: '#fcf9f2', margin: 0 }}>
+              Tidak ada produk kopi yang cocok
+            </h3>
+            <p style={{ color: '#9ca3af', fontSize: '0.85rem', maxWidth: 400 }}>
+              Coba sesuaikan kata kunci pencarian atau reset filter untuk melihat katalog lengkap yang terdaftar.
+            </p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('all');
+                setSelectedOrigin('all');
+                setSelectedRoast('all');
+              }}
+              className="btn btn-primary btn-sm"
+              style={{ padding: '8px 18px' }}
+            >
+              Reset Filter
+            </button>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: 22
+            }}
+          >
+            {filteredCoffees.map(coffee => (
+              <ProductCard key={coffee.id} coffee={coffee} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Difference Explanation Box for End-Users */}
+      <div
+        className="glass-panel"
+        style={{
+          padding: '24px 28px',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: 'rgba(20, 16, 13, 0.65)',
+          borderRadius: 16
+        }}
+      >
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fcf9f2', marginBottom: 12 }}>
+          💡 Mengapa Dashboard User dan Admin Dibuat Berbeda?
+        </h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 18, fontSize: '0.85rem', color: '#d1c7bc' }}>
+          <div style={{ background: 'rgba(245, 158, 11, 0.06)', padding: 14, borderRadius: 12, border: '1px solid rgba(245, 158, 11, 0.2)' }}>
+            <div style={{ fontWeight: 700, color: '#fbbf24', marginBottom: 4 }}>
+              ☕ Dashboard User (Halaman Ini):
+            </div>
+            Dirancang khusus untuk pembeli kopi — mengecek promo & voucher, menelusuri katalog kopi terbaru, memantau pengiriman barang, dan checkout dengan mudah.
+          </div>
+          <div style={{ background: 'rgba(159, 18, 57, 0.08)', padding: 14, borderRadius: 12, border: '1px solid rgba(159, 18, 57, 0.25)' }}>
+            <div style={{ fontWeight: 700, color: '#fda4af', marginBottom: 4 }}>
+              🛡️ Dashboard Admin (/admin):
+            </div>
+            Pusat komando pengelola — admin dapat melakukan **CRUD (Create, Read, Update, Delete)** barang, menambah produk kopi baru, mengatur stok barang, dan mengubah status pesanan pelanggan.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
