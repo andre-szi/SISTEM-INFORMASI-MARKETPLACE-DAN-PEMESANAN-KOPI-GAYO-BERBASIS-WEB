@@ -343,3 +343,291 @@ export default function UserDashboardPage() {
             </Link>
           </div>
         </div>
+        {/* 4 Customer Highlights / Stats */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: 16,
+            marginTop: 28,
+            paddingTop: 24,
+            borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+          }}
+        >
+          {/* Card 1: Poin Loyalitas */}
+          <div
+            style={{
+              background: 'rgba(245, 158, 11, 0.07)',
+              border: '1px solid rgba(245, 158, 11, 0.2)',
+              borderRadius: 14,
+              padding: '14px 18px'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <span style={{ fontSize: '0.78rem', color: '#9ca3af', fontWeight: 600 }}>Gayo Coffee Poin</span>
+              <Sparkles size={16} color="#fbbf24" />
+            </div>
+            <div style={{ fontSize: '1.45rem', fontWeight: 800, color: '#fbbf24' }}>
+              1,450 Pts
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#d1c7bc', marginTop: 4 }}>
+              Setara diskon Rp14.500
+            </div>
+          </div>
+
+          {/* Card 2: Total Belanja */}
+          <div
+            style={{
+              background: 'rgba(34, 197, 94, 0.07)',
+              border: '1px solid rgba(34, 197, 94, 0.2)',
+              borderRadius: 14,
+              padding: '14px 18px'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <span style={{ fontSize: '0.78rem', color: '#9ca3af', fontWeight: 600 }}>Total Belanja</span>
+              <TrendingUp size={16} color="#86efac" />
+            </div>
+            <div style={{ fontSize: '1.45rem', fontWeight: 800, color: '#86efac' }}>
+              Rp{totalSpent.toLocaleString('id-ID')}
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#d1c7bc', marginTop: 4 }}>
+              Dari pesanan terverifikasi
+            </div>
+          </div>
+
+          {/* Card 3: Pesanan Aktif */}
+          <div
+            style={{
+              background: 'rgba(56, 189, 248, 0.07)',
+              border: '1px solid rgba(56, 189, 248, 0.2)',
+              borderRadius: 14,
+              padding: '14px 18px'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <span style={{ fontSize: '0.78rem', color: '#9ca3af', fontWeight: 600 }}>Pesanan Aktif</span>
+              <Package size={16} color="#7dd3fc" />
+            </div>
+            <div style={{ fontSize: '1.45rem', fontWeight: 800, color: '#7dd3fc' }}>
+              {activeOrders.length} Pesanan
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#d1c7bc', marginTop: 4 }}>
+              {activeOrders.length > 0 ? 'Sedang dalam pengiriman/proses' : 'Tidak ada pesanan berjalan'}
+            </div>
+          </div>
+
+          {/* Card 4: Koleksi Biji Kopi Tersedia */}
+          <div
+            style={{
+              background: 'rgba(168, 85, 247, 0.07)',
+              border: '1px solid rgba(168, 85, 247, 0.2)',
+              borderRadius: 14,
+              padding: '14px 18px'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <span style={{ fontSize: '0.78rem', color: '#9ca3af', fontWeight: 600 }}>Katalog Tersedia</span>
+              <Coffee size={16} color="#d8b4fe" />
+            </div>
+            <div style={{ fontSize: '1.45rem', fontWeight: 800, color: '#d8b4fe' }}>
+              {coffees.length} Varian
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#d1c7bc', marginTop: 4 }}>
+              Disinkronkan dari Admin
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Promos & Coupon Banners for User */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 16
+        }}
+      >
+        {/* Voucher 1 */}
+        <div
+          className="glass-panel"
+          style={{
+            padding: '18px 20px',
+            border: '1px dashed rgba(245, 158, 11, 0.4)',
+            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(20, 16, 12, 0.6) 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 16
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 12,
+                background: 'rgba(245, 158, 11, 0.2)',
+                color: '#fbbf24',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}
+            >
+              <Tag size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 800, color: '#fcf9f2', fontSize: '0.95rem' }}>Diskon 10% Pengguna Baru</div>
+              <div style={{ fontSize: '0.78rem', color: '#9ca3af' }}>Gunakan kode: <strong style={{ color: '#f59e0b' }}>GAYO10</strong></div>
+            </div>
+          </div>
+          <button
+            onClick={() => handleCopyCoupon('GAYO10')}
+            className="btn btn-secondary btn-sm"
+            style={{ padding: '6px 14px', fontSize: '0.78rem' }}
+          >
+            {copiedCoupon === 'GAYO10' ? <Check size={14} color="#86efac" /> : <Copy size={14} />}
+            <span>{copiedCoupon === 'GAYO10' ? 'Tersalin' : 'Salin'}</span>
+          </button>
+        </div>
+
+        {/* Voucher 2 */}
+        <div
+          className="glass-panel"
+          style={{
+            padding: '18px 20px',
+            border: '1px dashed rgba(168, 85, 247, 0.4)',
+            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(20, 16, 12, 0.6) 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 16
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 12,
+                background: 'rgba(168, 85, 247, 0.2)',
+                color: '#d8b4fe',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}
+            >
+              <Sparkles size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 800, color: '#fcf9f2', fontSize: '0.95rem' }}>Diskon 15% Member Spesial</div>
+              <div style={{ fontSize: '0.78rem', color: '#9ca3af' }}>Gunakan kode: <strong style={{ color: '#d8b4fe' }}>GAYOPREMIUM</strong></div>
+            </div>
+          </div>
+          <button
+            onClick={() => handleCopyCoupon('GAYOPREMIUM')}
+            className="btn btn-secondary btn-sm"
+            style={{ padding: '6px 14px', fontSize: '0.78rem' }}
+          >
+            {copiedCoupon === 'GAYOPREMIUM' ? <Check size={14} color="#86efac" /> : <Copy size={14} />}
+            <span>{copiedCoupon === 'GAYOPREMIUM' ? 'Tersalin' : 'Salin'}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ACTIVE ORDERS TRACKER IN USER DASHBOARD */}
+      {activeOrders.length > 0 && (
+        <div
+          className="glass-panel"
+          style={{
+            padding: '24px 28px',
+            border: '1.5px solid rgba(56, 189, 248, 0.35)',
+            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(18, 14, 11, 0.9) 100%)'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18, flexWrap: 'wrap', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(56, 189, 248, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#38bdf8' }}>
+                <Truck size={18} />
+              </div>
+              <div>
+                <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#fcf9f2', margin: 0 }}>
+                  Pelacakan Pesanan Aktif Anda
+                </h2>
+                <p style={{ fontSize: '0.78rem', color: '#9ca3af', margin: '2px 0 0 0' }}>
+                  Pesanan sedang diproses dan dikirim langsung dari Dataran Tinggi Gayo, Aceh
+                </p>
+              </div>
+            </div>
+
+            <Link href="/orders" className="btn btn-secondary btn-sm" style={{ padding: '6px 14px', fontSize: '0.8rem' }}>
+              <span>Lihat Detail Semua</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {activeOrders.slice(0, 2).map(order => (
+              <div
+                key={order.id}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: 14,
+                  padding: 16,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: 14
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                    <span style={{ fontWeight: 800, color: '#f59e0b', fontSize: '0.92rem' }}>
+                      #{order.id}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        padding: '3px 10px',
+                        borderRadius: 20,
+                        background:
+                          order.status === 'Dikirim' ? 'rgba(249, 115, 22, 0.2)' :
+                          order.status === 'Diproses' ? 'rgba(168, 85, 247, 0.2)' :
+                          'rgba(234, 179, 8, 0.2)',
+                        color:
+                          order.status === 'Dikirim' ? '#fdba74' :
+                          order.status === 'Diproses' ? '#d8b4fe' :
+                          '#fde047'
+                      }}
+                    >
+                      {order.status}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '0.82rem', color: '#d1c7bc' }}>
+                    {order.items?.map(it => `${it.coffee?.name || 'Kopi'} (${it.quantity}x)`).join(', ')}
+                  </div>
+                  <div style={{ fontSize: '0.74rem', color: '#9ca3af', marginTop: 4 }}>
+                    Kurir: {order.courier} • Total: <strong style={{ color: '#fbbf24' }}>Rp{order.totalAmount?.toLocaleString('id-ID')}</strong>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: 10 }}>
+                  <Link
+                    href={`/orders?id=${order.id}`}
+                    className="btn btn-secondary btn-sm"
+                    style={{ padding: '6px 14px', fontSize: '0.8rem' }}
+                  >
+                    <Eye size={14} />
+                    <span>Lacak Status</span>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
